@@ -11,12 +11,11 @@ class NavigationViewModel : ViewModel() {
 
     private var destinationObserver: ((destination: Destination) -> Unit)? = null
 
-    private val onBackPressedCallback =
-        object : OnBackPressedCallback(destinationStack.isNotEmpty()) {
-            override fun handleOnBackPressed() {
-                navigateBack()
-            }
+    private val onBackPressedCallback = object : OnBackPressedCallback(false) {
+        override fun handleOnBackPressed() {
+            navigateBack()
         }
+    }
 
     fun navigateBack() {
         destinationStack.removeTopEntry()
@@ -34,7 +33,7 @@ class NavigationViewModel : ViewModel() {
         destinationStack.addEntry(destinationId)
         destinationObserver?.invoke(destinationStack.last())
 
-        if (!onBackPressedCallback.isEnabled) {
+        if (!onBackPressedCallback.isEnabled && destinationStack.size > 1) {
             onBackPressedCallback.isEnabled = true
         }
     }
