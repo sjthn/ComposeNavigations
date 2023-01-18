@@ -1,4 +1,4 @@
-package dev.srijith.sample.composenavigations.presenterlib
+package dev.srijith.composenavigations.scopedpresenter
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -8,7 +8,7 @@ import androidx.lifecycle.get
 
 fun <PresenterT> ViewModelStoreOwner.presenter(creator: () -> PresenterT): Lazy<PresenterT> {
     return LazyPresenter({ viewModelStore },
-        { ScopedViewModel.NavigatorViewModelFactory(creator) })
+        { ScopedViewModel.ScopedViewModelFactory(creator) })
 }
 
 class LazyPresenter<PresenterT>(
@@ -38,7 +38,7 @@ class LazyPresenter<PresenterT>(
 }
 
 class ScopedViewModel<PresenterT>(val presenter: PresenterT) : ViewModel() {
-    class NavigatorViewModelFactory<PresenterT>(private val creator: () -> PresenterT) :
+    class ScopedViewModelFactory<PresenterT>(private val creator: () -> PresenterT) :
         ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             return ScopedViewModel(creator()) as T

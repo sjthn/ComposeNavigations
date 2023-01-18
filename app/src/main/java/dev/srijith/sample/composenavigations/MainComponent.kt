@@ -1,13 +1,13 @@
 package dev.srijith.sample.composenavigations
 
 import androidx.compose.runtime.Composable
+import dev.srijith.composenavigations.Destinations
+import dev.srijith.composenavigations.scopedcomposable.ScopedComposable
 import dev.srijith.sample.composenavigations.dashboard.Dashboard
 import dev.srijith.sample.composenavigations.dashboard.DashboardDependencyProvider
 import dev.srijith.sample.composenavigations.navigation.NavigatorPresenter
 import dev.srijith.sample.composenavigations.passwordentry.PasswordEntry
 import dev.srijith.sample.composenavigations.passwordentry.PasswordEntryDependencyProvider
-import dev.srijith.sample.composenavigations.scopedobjects.ScopedComposable
-import dev.srijith.composenavigations.Destinations
 
 @Composable
 fun MainComponent(navigatorPresenter: NavigatorPresenter) {

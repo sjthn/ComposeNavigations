@@ -1,8 +1,8 @@
-package dev.srijith.sample.composenavigations.scopedobjects
+package dev.srijith.composenavigations.scopedcomposable
 
 import androidx.compose.runtime.Composable
-import dev.srijith.sample.composenavigations.dependencylib.DependencyInjector
 import dev.srijith.composenavigations.Destination
+import dev.srijith.composenavigations.dependencyinjector.DependencyInjector
 
 @Composable
 fun <DependencyComponentT> Destination.ScopedComposable(

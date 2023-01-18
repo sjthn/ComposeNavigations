@@ -1,10 +1,10 @@
 package dev.srijith.sample.composenavigations.passwordentry
 
 import androidx.lifecycle.ViewModelStoreOwner
+import dev.srijith.composenavigations.dependencyinjector.DependencyInjector
+import dev.srijith.composenavigations.scopedpresenter.presenter
 import dev.srijith.sample.composenavigations.UserRepository
-import dev.srijith.sample.composenavigations.dependencylib.DependencyInjector
 import dev.srijith.sample.composenavigations.navigation.NavigatorPresenter
-import dev.srijith.sample.composenavigations.presenterlib.presenter
 
 interface PasswordEntryDependencyComponent {
     val passwordEntryPresenter: PasswordEntryPresenter

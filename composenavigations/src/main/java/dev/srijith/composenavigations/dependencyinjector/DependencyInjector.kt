@@ -1,4 +1,4 @@
-package dev.srijith.sample.composenavigations.dependencylib
+package dev.srijith.composenavigations.dependencyinjector
 
 import androidx.lifecycle.ViewModelStoreOwner
 
