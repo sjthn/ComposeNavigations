@@ -18,4 +18,12 @@ class NavigatorPresenter(initialDestination: String, private val navigatorVM: Na
     fun onDashboardItemClicked() {
         navigatorVM.navigate("passwordEntry")
     }
+
+    fun onLoginClicked() {
+        navigatorVM.navigate("dashboard") {
+            popUntil("login") {
+                inclusive = true
+            }
+        }
+    }
 }

@@ -5,6 +5,8 @@ import dev.srijith.composenavigations.navigationgraph.NavDestinations
 import dev.srijith.composenavigations.navigationgraph.scopedComposable
 import dev.srijith.sample.composenavigations.dashboard.Dashboard
 import dev.srijith.sample.composenavigations.dashboard.DashboardDependencyProvider
+import dev.srijith.sample.composenavigations.login.Login
+import dev.srijith.sample.composenavigations.login.dependency.LoginDependencyComponentProvider
 import dev.srijith.sample.composenavigations.navigation.NavigatorPresenter
 import dev.srijith.sample.composenavigations.passwordentry.PasswordEntry
 import dev.srijith.sample.composenavigations.passwordentry.PasswordEntryDependencyProvider
@@ -12,6 +14,11 @@ import dev.srijith.sample.composenavigations.passwordentry.PasswordEntryDependen
 @Composable
 fun MainComponent(navigatorPresenter: NavigatorPresenter) {
     NavDestinations(destination = navigatorPresenter.navigateTo.value) {
+        scopedComposable("login") {
+            val loginDependencyComponent =
+                LoginDependencyComponentProvider(navigatorPresenter).inject(it)
+            Login(loginDependencyComponent)
+        }
         scopedComposable("dashboard") {
             val dashboardDependencyComponent =
                 DashboardDependencyProvider(navigatorPresenter).inject(it)

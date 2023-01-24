@@ -22,7 +22,7 @@ class MainActivity : AppCompatActivity() {
             }
             navigatorVM.enableOnBackPressedCallback(onBackPressedDispatcher)
             val navigatorPresenter by presenter {
-                NavigatorPresenter("dashboard", navigatorVM)
+                NavigatorPresenter("login", navigatorVM)
             }
             MainComponent(navigatorPresenter)
         }

@@ -7,7 +7,7 @@ Checkout the sample `app` module to understand how to use this library.
 # TODOs v1.0
 1. &#9745; Declarative navigation graph
 2. &#9744; Ability to pass parameters between screens
-3. &#9744; Remove an entry from backstack when navigated away
+3. &#9745; Remove an entry from backstack when navigated away
 
 # Priorities post v1.0
 1. &#9744; Navigation support for dialogs

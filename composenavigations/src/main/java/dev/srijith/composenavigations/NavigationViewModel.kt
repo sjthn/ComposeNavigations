@@ -4,6 +4,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.activity.OnBackPressedDispatcher
 import androidx.lifecycle.ViewModel
 import dev.srijith.composenavigations.internal.DestinationStack
+import dev.srijith.composenavigations.navigationoptions.NavigationOptionsBuilder
 
 class NavigationViewModel : ViewModel() {
 
@@ -29,12 +30,20 @@ class NavigationViewModel : ViewModel() {
         }
     }
 
-    fun navigate(destinationId: String) {
-        destinationStack.addEntry(destinationId)
+    fun navigate(
+        destinationId: String,
+        navigationOptionsBuilder: (NavigationOptionsBuilder.() -> Unit)? = null
+    ) {
+        val navigationOptions = NavigationOptionsBuilder(destinationId).apply {
+            navigationOptionsBuilder?.invoke(this)
+        }.build()
+        destinationStack.addEntry(navigationOptions)
         destinationObserver?.invoke(destinationStack.last())
 
         if (!onBackPressedCallback.isEnabled && destinationStack.size > 1) {
             onBackPressedCallback.isEnabled = true
+        } else if (destinationStack.size <= 1) {
+            onBackPressedCallback.isEnabled = false
         }
     }
 
