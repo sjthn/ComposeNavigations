@@ -2,13 +2,15 @@ package dev.srijith.composenavigations
 
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.OnBackPressedDispatcher
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import dev.srijith.composenavigations.internal.DestinationStack
 import dev.srijith.composenavigations.navigationoptions.NavigationOptionsBuilder
 
-class NavigationViewModel : ViewModel() {
+class NavigationViewModel(private val savedStateHandle: SavedStateHandle) : ViewModel() {
 
-    private val destinationStack: DestinationStack = DestinationStack()
+    private val destinationStack: DestinationStack =
+        savedStateHandle.get<DestinationStack>("destinationStack") ?: DestinationStack()
 
     private var destinationObserver: ((destination: Destination) -> Unit)? = null
 
@@ -20,6 +22,7 @@ class NavigationViewModel : ViewModel() {
 
     fun navigateBack() {
         destinationStack.removeTopEntry()
+        savedStateHandle["destinationStack"] = destinationStack
 
         if (destinationStack.isEmpty() || destinationStack.size == 1) {
             onBackPressedCallback.isEnabled = false
@@ -38,6 +41,7 @@ class NavigationViewModel : ViewModel() {
             navigationOptionsBuilder?.invoke(this)
         }.build()
         destinationStack.addEntry(navigationOptions)
+        savedStateHandle["destinationStack"] = destinationStack
         destinationObserver?.invoke(destinationStack.last())
 
         if (!onBackPressedCallback.isEnabled && destinationStack.size > 1) {
@@ -49,6 +53,9 @@ class NavigationViewModel : ViewModel() {
 
     fun observeDestination(observer: (destination: Destination) -> Unit) {
         destinationObserver = observer
+        if (destinationStack.size > 0) {
+            observer(destinationStack.last())
+        }
     }
 
     fun enableOnBackPressedCallback(dispatcher: OnBackPressedDispatcher) {

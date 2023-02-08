@@ -23,7 +23,7 @@ fun Dashboard(dashboardDependencyComponent: DashboardDependencyComponent) {
     ) { paddingValues ->
         Box(Modifier.padding(paddingValues)) {
             Column {
-                Text("Welcome ${dashboardPresenter.userDetails.value?.firstName ?: ""}")
+                Text("Welcome ${dashboardPresenter.username.value}")
                 LazyColumn {
                     items(20) { index ->
                         ListItem(headlineText = {

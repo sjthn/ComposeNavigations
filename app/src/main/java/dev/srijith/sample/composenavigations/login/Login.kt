@@ -23,8 +23,14 @@ fun Login(loginDependencyComponent: LoginDependencyComponent) {
     ) {
 
         Column {
-            TextField(value = "", onValueChange = {}, label = { Text("username") })
-            TextField(value = "", onValueChange = {}, label = { Text("password") })
+            TextField(
+                value = loginPresenter.username.value,
+                onValueChange = loginPresenter::onUsernameChange,
+                label = { Text("username") })
+            TextField(
+                value = loginPresenter.password.value,
+                onValueChange = loginPresenter::onPasswordChange,
+                label = { Text("password") })
             Button(onClick = { loginPresenter.onLoginButtonClicked() }) {
                 Text("Login")
             }

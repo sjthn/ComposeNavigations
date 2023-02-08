@@ -1,18 +1,19 @@
 package dev.srijith.composenavigations.internal
 
+import android.os.Bundle
+import android.os.Parcel
+import android.os.Parcelable
 import androidx.lifecycle.Lifecycle
 import dev.srijith.composenavigations.Destination
 import dev.srijith.composenavigations.navigationoptions.internal.NavigationOptions
 
-internal class DestinationStack {
+internal class DestinationStack() : Parcelable {
     private var navStack: List<Destination> = listOf()
 
-    fun addEntry(destinationId: String) {
-        val destination = Destination(destinationId)
-        val temp = navStack.toMutableList()
-        temp.add(destination)
-        navStack = temp
-        navStack.lastOrNull()?.updateLifecycleState(Lifecycle.State.CREATED)
+    private constructor(parcel: Parcel) : this() {
+        val tempNavStack = mutableListOf<Destination>()
+        parcel.readTypedList(tempNavStack, Destination.CREATOR)
+        navStack = tempNavStack
     }
 
     fun addEntry(navigationOptions: NavigationOptions) {
@@ -23,7 +24,7 @@ internal class DestinationStack {
 
         val popOptions = navigationOptions.popOptions
         if (popOptions == null) {
-            addEntry(destinationId)
+            addEntry(destinationId, navigationOptions.data)
             return
         }
 
@@ -32,8 +33,12 @@ internal class DestinationStack {
             "Cannot find the entry with ID ${popOptions.popUntil} to pop"
         }
         navStack = navStack.take(oneIndex - (if (popOptions.inclusive) 1 else 0))
+        addEntry(destinationId, navigationOptions.data)
+    }
+
+    private fun addEntry(destinationId: String, data: Bundle?) {
+        val destination = Destination(destinationId, data)
         val temp = navStack.toMutableList()
-        val destination = Destination(destinationId)
         temp.add(destination)
         navStack = temp
         navStack.lastOrNull()?.updateLifecycleState(Lifecycle.State.CREATED)
@@ -57,4 +62,22 @@ internal class DestinationStack {
     fun last(): Destination = navStack.last()
 
     val size get() = navStack.size
+
+    override fun describeContents(): Int {
+        return 0
+    }
+
+    override fun writeToParcel(dest: Parcel, flags: Int) {
+        dest.writeTypedList(navStack)
+    }
+
+    companion object CREATOR : Parcelable.Creator<DestinationStack> {
+        override fun createFromParcel(parcel: Parcel): DestinationStack {
+            return DestinationStack(parcel)
+        }
+
+        override fun newArray(size: Int): Array<DestinationStack?> {
+            return arrayOfNulls(size)
+        }
+    }
 }

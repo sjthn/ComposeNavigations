@@ -3,7 +3,6 @@ package dev.srijith.sample.composenavigations.passwordentry
 import androidx.lifecycle.ViewModelStoreOwner
 import dev.srijith.composenavigations.dependencyinjector.DependencyInjector
 import dev.srijith.composenavigations.scopedpresenter.presenter
-import dev.srijith.sample.composenavigations.UserRepository
 import dev.srijith.sample.composenavigations.navigation.NavigatorPresenter
 
 interface PasswordEntryDependencyComponent {
@@ -12,7 +11,6 @@ interface PasswordEntryDependencyComponent {
 
 class PasswordEntryDependencyComponentImpl(
     viewModelStoreOwner: ViewModelStoreOwner,
-    private val userRepository: UserRepository,
     navigatorPresenter: NavigatorPresenter
 ) :
     PasswordEntryDependencyComponent {
@@ -26,7 +24,6 @@ class PasswordEntryDependencyProvider(private val navigatorPresenter: NavigatorP
     override fun inject(viewModelStoreOwner: ViewModelStoreOwner): PasswordEntryDependencyComponent {
         return PasswordEntryDependencyComponentImpl(
             viewModelStoreOwner,
-            UserRepository(),
             navigatorPresenter
         )
     }

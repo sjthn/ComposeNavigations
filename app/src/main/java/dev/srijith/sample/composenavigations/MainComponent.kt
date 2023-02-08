@@ -20,9 +20,12 @@ fun MainComponent(navigatorPresenter: NavigatorPresenter) {
             Login(loginDependencyComponent)
         }
         scopedComposable("dashboard") {
-            val dashboardDependencyComponent =
-                DashboardDependencyProvider(navigatorPresenter).inject(it)
-            Dashboard(dashboardDependencyComponent)
+            val username = it.data?.getString("username")
+            if (username != null) {
+                val dashboardDependencyComponent =
+                    DashboardDependencyProvider(navigatorPresenter, username).inject(it)
+                Dashboard(dashboardDependencyComponent)
+            }
         }
         scopedComposable("passwordEntry") {
             val passwordEntryDependencyComponent =
