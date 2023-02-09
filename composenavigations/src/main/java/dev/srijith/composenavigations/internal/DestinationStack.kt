@@ -44,11 +44,12 @@ internal class DestinationStack() : Parcelable {
         navStack.lastOrNull()?.updateLifecycleState(Lifecycle.State.CREATED)
     }
 
-    fun removeTopEntry() {
+    fun removeTopEntry(data: Bundle?) {
         navStack.last().updateLifecycleState(Lifecycle.State.DESTROYED)
         val temp = navStack.toMutableList()
         temp.removeLast()
         navStack = temp
+        navStack.last().returnData = data
     }
 
     fun isNotEmpty(): Boolean {

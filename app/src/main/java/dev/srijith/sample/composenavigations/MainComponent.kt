@@ -1,5 +1,6 @@
 package dev.srijith.sample.composenavigations
 
+import android.util.Log
 import androidx.compose.runtime.Composable
 import dev.srijith.composenavigations.navigationgraph.NavDestinations
 import dev.srijith.composenavigations.navigationgraph.scopedComposable
@@ -20,6 +21,12 @@ fun MainComponent(navigatorPresenter: NavigatorPresenter) {
             Login(loginDependencyComponent)
         }
         scopedComposable("dashboard") {
+            val returnData = it.returnData?.getString("passBack")
+            if (returnData == null) {
+                Log.d("MainComponent", "Return Data: null")
+            } else {
+                Log.d("MainComponent", "Return Data: $returnData")
+            }
             val username = it.data?.getString("username")
             if (username != null) {
                 val dashboardDependencyComponent =

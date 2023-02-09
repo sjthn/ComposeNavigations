@@ -17,6 +17,9 @@ class Destination(destinationId: String, val data: Bundle? = null) : LifecycleOw
 
     private val viewModelStore = ViewModelStore()
 
+    var returnData: Bundle? = null
+        internal set
+
     constructor(parcel: Parcel) : this(
         parcel.readString() ?: throw NullPointerException("DestinationId cannot be null"),
         parcel.readBundle(Bundle::class.java.classLoader)
@@ -25,6 +28,7 @@ class Destination(destinationId: String, val data: Bundle? = null) : LifecycleOw
         lifecycle.currentState = Lifecycle.State.valueOf(
             lifecycleState ?: throw NullPointerException("Lifecycle state cannot be null")
         )
+        returnData = parcel.readBundle(Bundle::class.java.classLoader)
     }
 
     override fun getLifecycle(): Lifecycle {
@@ -47,6 +51,7 @@ class Destination(destinationId: String, val data: Bundle? = null) : LifecycleOw
         dest.writeString(identifier)
         dest.writeBundle(data)
         dest.writeString(lifecycle.currentState.name)
+        dest.writeBundle(returnData)
     }
 
     companion object CREATOR : Parcelable.Creator<Destination> {

@@ -1,5 +1,6 @@
 package dev.srijith.sample.composenavigations.navigation
 
+import android.os.Bundle
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.core.os.bundleOf
@@ -33,5 +34,9 @@ class NavigatorPresenter(
             }
             setData(bundleOf("username" to username))
         }
+    }
+
+    fun onPasswordEntrySubmitClicked(passBackBundle: Bundle?) {
+        navigatorVM.navigateBack(passBackBundle)
     }
 }

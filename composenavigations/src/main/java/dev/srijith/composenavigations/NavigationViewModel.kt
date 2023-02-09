@@ -1,5 +1,6 @@
 package dev.srijith.composenavigations
 
+import android.os.Bundle
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.OnBackPressedDispatcher
 import androidx.lifecycle.SavedStateHandle
@@ -20,8 +21,8 @@ class NavigationViewModel(private val savedStateHandle: SavedStateHandle) : View
         }
     }
 
-    fun navigateBack() {
-        destinationStack.removeTopEntry()
+    fun navigateBack(data: Bundle? = null) {
+        destinationStack.removeTopEntry(data)
         savedStateHandle["destinationStack"] = destinationStack
 
         if (destinationStack.isEmpty() || destinationStack.size == 1) {

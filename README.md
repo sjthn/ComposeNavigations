@@ -1,6 +1,7 @@
 # ComposeNavigations
 
-Navigation library for screens written in Android's Jetpack Compose, that survives configuration changes.
+Navigation library for screens written in Android's Jetpack Compose,
+that survives configuration changes and process death.
 
 Checkout the sample `app` module to understand how to use this library.
 

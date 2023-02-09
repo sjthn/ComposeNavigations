@@ -15,7 +15,7 @@ class PasswordEntryDependencyComponentImpl(
 ) :
     PasswordEntryDependencyComponent {
     override val passwordEntryPresenter: PasswordEntryPresenter by viewModelStoreOwner.presenter {
-        PasswordEntryPresenter()
+        PasswordEntryPresenter(navigatorPresenter)
     }
 }
 
