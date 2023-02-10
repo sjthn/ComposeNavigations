@@ -22,7 +22,7 @@ class Destination(destinationId: String, val data: Bundle? = null) : LifecycleOw
 
     constructor(parcel: Parcel) : this(
         parcel.readString() ?: throw NullPointerException("DestinationId cannot be null"),
-        parcel.readBundle(Bundle::class.java.classLoader)
+        parcel.readBundle(Destination::class.java.classLoader)
     ) {
         val lifecycleState = parcel.readString()
         lifecycle.currentState = Lifecycle.State.valueOf(
